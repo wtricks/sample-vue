@@ -8,12 +8,26 @@
         onMounted, 
         onUnmounted, 
         onUpdated, 
+        reactive, 
         ref 
     } from 'vue'
 
     const color = ref("")
     const name = ref("")
     const date = ref(new Date())
+    
+    // for our todo list
+    const listValue = ref("")
+    const listArray  = reactive<string[]>([])
+
+    const addToList = () => {
+        if (listValue.value == "") {
+            return
+        }
+
+        listArray.push(listValue.value)
+        listValue.value = ''
+    } 
 
     // let interval: number;
 
@@ -91,6 +105,17 @@
     <br><br>
     <button type="button" title="Clear Name" @click="clearName">Clear</button>
     <button type="button" title="Clear Name" @click="capitilizeName">Make capital</button>
+
+    <br><br><br>
+    <input type="text" placeholder="Enter anything..." name="list" v-model="listValue" />
+    <button type="button" title="Add message into list" @click="addToList">Add</button>
+    <br>
+
+    <ul>
+        <li v-for="(item, index) in listArray">
+            {{ index }} - {{ item }}
+        </li>
+    </ul>
 </template>
 
 <style>
