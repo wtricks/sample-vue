@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { 
-computed,
+        computed,
         onBeforeMount, 
         onBeforeUnmount, 
         onBeforeUpdate, 
@@ -11,6 +11,7 @@ computed,
         ref 
     } from 'vue'
 
+    const isChecked = ref(false)
     const name = ref("")
     const date = ref(new Date())
 
@@ -69,15 +70,29 @@ computed,
 </script>
 
 <template>
-    <h1>Hello {{name}}</h1>
+    <h1 :class="{red: isChecked, green: !isChecked}">Hello {{name}}</h1>
     <br>
     {{ currentDate }}
     <br>
     <br>
 
+    <input id="check" type="checkbox" name="checkbox" v-model="isChecked" />
+    <label for="check">Should be Red</label>
+
+    <br>
     <br>
     <input type="text" placeholder="Enter your name" name="fname" v-model="name" />
     <br><br>
     <button type="button" title="Clear Name" @click="clearName">Clear</button>
     <button type="button" title="Clear Name" @click="capitilizeName">Make capital</button>
 </template>
+
+<style>
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+</style>
