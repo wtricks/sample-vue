@@ -1,3 +1,10 @@
+<script setup>
+    import { ref } from 'vue'
+
+    const name = ref("")
+</script>
+
 <template>
-    <h1>Hello World!</h1>
+    <input type="text" placeholder="Enter your name" name="fname" v-model="name" />
+    <h1>Hello {{name}}</h1>
 </template>
