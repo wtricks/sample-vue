@@ -17,15 +17,30 @@
     const date = ref(new Date())
     
     // for our todo list
+    const currentListItemIndex = ref(-1);
     const listValue = ref("")
     const listArray  = reactive<string[]>([])
+
+    const deleteListItem = (index: number) => {
+        listArray.splice(index, 1)
+    }
+
+    const editListItem = (index: number) => {
+        listValue.value = listArray[index]
+        currentListItemIndex.value = index;
+    }
 
     const addToList = () => {
         if (listValue.value == "") {
             return
         }
 
-        listArray.push(listValue.value)
+        if (currentListItemIndex.value == -1) {
+            listArray.push(listValue.value)
+        } else {
+            listArray[currentListItemIndex.value] = listValue.value
+            currentListItemIndex.value = -1
+        }
         listValue.value = ''
     } 
 
@@ -108,12 +123,16 @@
 
     <br><br><br>
     <input type="text" placeholder="Enter anything..." name="list" v-model="listValue" />
-    <button type="button" title="Add message into list" @click="addToList">Add</button>
+    <button type="button" title="Add message into list" @click="addToList">
+        {{ currentListItemIndex != -1 ? "Edit" : "Add" }}
+    </button>
     <br>
 
     <ul>
         <li v-for="(item, index) in listArray">
             {{ index }} - {{ item }}
+            <button type="button" title="Delete" @click="deleteListItem(index)">Delete</button>
+            <button type="button" title="Delete" @click="editListItem(index)">Edit</button>
         </li>
     </ul>
 </template>
@@ -125,5 +144,20 @@
 
     .green {
         color: green;
+    }
+
+    ul {
+        padding: 0
+    }
+
+    li {
+        padding: 1rem;
+        list-style: none;
+        font-size: 1.5rem;
+    }
+
+    li button {
+        margin-left: 0.8rem;
+        font-size: 0.8rem;
     }
 </style>
