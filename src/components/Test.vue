@@ -11,7 +11,7 @@
         ref 
     } from 'vue'
 
-    const isChecked = ref(false)
+    const color = ref("")
     const name = ref("")
     const date = ref(new Date())
 
@@ -70,14 +70,20 @@
 </script>
 
 <template>
-    <h1 :class="{red: isChecked, green: !isChecked}">Hello {{name}}</h1>
+    <h1 :style="{color}">Hello {{name}}</h1>
     <br>
     {{ currentDate }}
     <br>
     <br>
 
-    <input id="check" type="checkbox" name="checkbox" v-model="isChecked" />
-    <label for="check">Should be Red</label>
+    <label for="colors">Color</label>
+    <select id="colors" name="colros" v-model="color">
+        <option value="" selected disabled>No color</option>
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="yellow">Yellow</option>
+        <option value="blue">Blue</option>
+    </select>
 
     <br>
     <br>
