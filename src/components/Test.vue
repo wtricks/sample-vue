@@ -1,7 +1,19 @@
 <script setup lang="ts">
-    import { onBeforeMount, onBeforeUnmount, onBeforeUpdate, onErrorCaptured, onMounted, onUnmounted, onUpdated, ref } from 'vue'
+    import { 
+        onBeforeMount, 
+        onBeforeUnmount, 
+        onBeforeUpdate, 
+        onErrorCaptured, 
+        onMounted, 
+        onUnmounted, 
+        onUpdated, 
+        ref 
+    } from 'vue'
 
     const name = ref("")
+    const date = ref(new Date())
+
+    let interval: number;
 
     // methods for clearing name
     const clearName = () => {
@@ -19,6 +31,10 @@
 
     onMounted(() => {
         console.log("Mounted")
+
+        interval = setInterval(() => {
+            date.value = new Date()
+        }, 1000)
     })
 
     onBeforeUpdate(() => {
@@ -26,7 +42,7 @@
     })
 
     onUpdated(() => {
-        console.log("State is updated!")  
+        console.log("State is updated!") 
     })
 
     onBeforeUnmount(() => {
@@ -34,7 +50,10 @@
     })
 
     onUnmounted(() => {
-        console.log("Component is unmounted already!")  
+        console.log("Component is unmounted already!") 
+        
+        // clearing interval before destroying this component
+        clearInterval(interval)
     })
 
     onErrorCaptured((err) => {
@@ -44,9 +63,14 @@
 
 <template>
     <h1>Hello {{name}}</h1>
+    <br>
+    {{ date }}
+    <br>
+    <br>
 
     <br>
     <input type="text" placeholder="Enter your name" name="fname" v-model="name" />
+    <br><br>
     <button type="button" title="Clear Name" @click="clearName">Clear</button>
     <button type="button" title="Clear Name" @click="capitilizeName">Make capital</button>
 </template>
