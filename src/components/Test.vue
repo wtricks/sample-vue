@@ -1,4 +1,6 @@
 <script setup lang="ts">
+    import BaseButton from './BaseButton.vue';
+
     import { 
         computed,
         onBeforeMount, 
@@ -56,6 +58,15 @@
         name.value = name.value.toUpperCase();
     }
 
+    // reverse name
+    const reverseName = () => {
+        name.value = name.value.split("").reverse().join("")
+    }
+
+
+    const showAlert = () => {
+        alert("hello")
+    }
 
     // computed properties
     const currentDate = computed(() => {
@@ -118,8 +129,10 @@
     <br>
     <input type="text" placeholder="Enter your name" name="fname" v-model="name" />
     <br><br>
-    <button type="button" title="Clear Name" @click="clearName">Clear</button>
+    <base-button background-color="#e0a800" text-color="white" @click="showAlert" value="Alert" />
+    <base-button background-color="#5a6268" text-color="white" @click="clearName" value="Clear" />
     <button type="button" title="Clear Name" @click="capitilizeName">Make capital</button>
+    <base-button background-color="#218838" text-color="white" @click="reverseName" value="Reverse" />
 
     <br><br><br>
     <input type="text" placeholder="Enter anything..." name="list" v-model="listValue" />
