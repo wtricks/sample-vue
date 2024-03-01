@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { 
+computed,
         onBeforeMount, 
         onBeforeUnmount, 
         onBeforeUpdate, 
@@ -13,7 +14,7 @@
     const name = ref("")
     const date = ref(new Date())
 
-    let interval: number;
+    // let interval: number;
 
     // methods for clearing name
     const clearName = () => {
@@ -25,6 +26,12 @@
         name.value = name.value.toUpperCase();
     }
 
+
+    // computed properties
+    const currentDate = computed(() => {
+        return `${date.value.getFullYear()} - ${("0"+date.value.getMonth()).slice(-2)} - ${("0"+date.value.getDate()).slice(-2)}`
+    })
+
     onBeforeMount(() => {
         console.log("Before Mount")
     })
@@ -32,9 +39,9 @@
     onMounted(() => {
         console.log("Mounted")
 
-        interval = setInterval(() => {
-            date.value = new Date()
-        }, 1000)
+        // interval = setInterval(() => {
+        //     date.value = new Date()
+        // }, 1000)
     })
 
     onBeforeUpdate(() => {
@@ -53,7 +60,7 @@
         console.log("Component is unmounted already!") 
         
         // clearing interval before destroying this component
-        clearInterval(interval)
+        // clearInterval(interval)
     })
 
     onErrorCaptured((err) => {
@@ -64,7 +71,7 @@
 <template>
     <h1>Hello {{name}}</h1>
     <br>
-    {{ date }}
+    {{ currentDate }}
     <br>
     <br>
 
