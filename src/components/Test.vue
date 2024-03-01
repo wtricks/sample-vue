@@ -1,7 +1,35 @@
-<script setup>
-    import { ref } from 'vue'
+<script setup lang="ts">
+    import { onBeforeMount, onBeforeUnmount, onBeforeUpdate, onErrorCaptured, onMounted, onUnmounted, onUpdated, ref } from 'vue'
 
     const name = ref("")
+
+    onBeforeMount(() => {
+        console.log("Before Mount")
+    })
+
+    onMounted(() => {
+        console.log("Mounted")
+    })
+
+    onBeforeUpdate(() => {
+        console.log("State is going to update")  
+    })
+
+    onUpdated(() => {
+        console.log("State is updated!")  
+    })
+
+    onBeforeUnmount(() => {
+        console.log("Component is going to unmount")  
+    })
+
+    onUnmounted(() => {
+        console.log("Component is unmounted already!")  
+    })
+
+    onErrorCaptured((err) => {
+        console.log("Error: ", err)
+    })
 </script>
 
 <template>
